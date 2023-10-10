@@ -1,4 +1,4 @@
-package com.example.expensetrackerthesis.Entities;
+package com.example.expensetrackerthesis.entities;
 
 import jakarta.persistence.*;
 
