@@ -1,19 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Login and Registration Form in HTML & CSS</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="container">
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
+    <input type="checkbox" id="flip">
+    <div class="cover">
+        <div class="front">
+           <img src="images/front.png" alt="">
+            <div class="text">
+                <span class="text-1">Every new friend is a <br> new adventure</span>
+                <span class="text-2">Let's get connected</span>
+            </div>
+        </div>
+        <div class="back">
+            <img class="backImg" src="images/back.png" alt="">
+            <div class="text">
+                <span class="text-1">Complete miles of journey <br> with one step</span>
+                <span class="text-2">Let's get started</span>
+            </div>
+        </div>
+    </div>
+    <div class="forms">
+        <div class="form-content">
+            <div class="login-form">
+                <div class="title">Login</div>
+                <form action="#" onsubmit="return validateLoginForm()">
+                    <!-- Login form content -->
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" placeholder="Enter your email" required id="loginUsername">
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Enter your password" required id="loginPassword">
+                        </div>
+                        <div class="text"><a href="#">Forgot password?</a></div>
+                        <div class="button input-box">
+                            <input type="submit" value="Submit">
+                        </div>
+                        <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
+                    </div>
+                </form>
+            </div>
+            <div class="signup-form">
+                <div class="title">Signup</div>
+                <form action="#" onsubmit="return validateRegistrationForm()">
+                    <!-- Registration form content -->
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-user"></i>
+                            <input type="text" placeholder="Enter your name" required id="registerUsername">
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" placeholder="Enter your email" required id="registerEmail">
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Enter your password" required id="registerPassword">
+                        </div>
+                        <div class="button input-box">
+                            <input type="submit" value="Submit">
+                        </div>
+                        <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function validateRegistrationForm() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+
+        if (username === '' || password === '' || email === '') {
+            alert('Please fill in all fields.');
+            return false;
+        }
+
+        // additional validation logic for password strength if needed
+
+        return true;
+    }
+
+    function validateLoginForm() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === '' || password === '') {
+            alert('Please fill in all fields.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </body>
 </html>
