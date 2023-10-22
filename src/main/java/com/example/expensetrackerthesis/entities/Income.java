@@ -5,15 +5,20 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "incomes")
+@Table(name = "incomes") // Add the @Table annotation with the table name
 public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "amount")
     private double amount;
+
+    @Column(name = "date")
     private LocalDate date;
 
     public Income() {

@@ -14,10 +14,11 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        // Handle login logic here
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password) {
+        // Handle login logic here (e.g., authenticate against a database)
         // For simplicity, we'll just print the login information
-        System.out.println("Login request - Username: " + username + ", Password: " + password);
+        System.out.println("Login request - Email: " + email + ", Password: " + password);
         return "redirect:/"; // Redirect to the home page or dashboard
     }
 }
+

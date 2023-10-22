@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Financial Dashboard</title>
+<!--  <link rel="stylesheet" href="/static/css/styles.css">-->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<style>
+  /* Basic styling */
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #7d2ae8;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 850px;
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    perspective: 2700px;
+    display: flex;
+  }
+
+  .cover {
+    position: relative;
+    height: 100%;
+    width: 50%;
+    transition: all 1s ease;
+    transform-origin: left;
+    transform-style: preserve-3d;
+  }
+
+  #flip:checked ~ .cover {
+    transform: rotateY(-180deg);
+  }
+
+  /* Sidebar/Menu styling */
+  .sidebar {
+    width: 200px;
+    background-color: #7d2ae8;
+    padding: 20px;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+  }
+
+  .sidebar a {
+    padding: 16px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidebar a:hover {
+    background-color: #5b13b9;
+    color: white;
+  }
+
+  /* Content styling */
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  /* Graph and Table styling */
+  .graph, .table {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .graph h3, .table h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table table th, .table table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Custom styles for graphs and tables can be added here */
+</style>
+
+<body>
+<div class="container">
+  <input type="checkbox" id="flip">
+  <div class="cover">
+    <!-- Front and back content goes here -->
+  </div>
+  <div class="forms">
+    <!-- Sidebar/Menu goes here -->
+    <div class="sidebar">
+      <a href="#">Home</a>
+      <a href="#">Expenses</a>
+      <a href="#">Savings</a>
+      <a href="#">Incomes</a>
+      <a href="#">Budgets</a>
+      <a href="#">Logout</a>
+    </div>
+    <!-- Graphs and Tables sections go here -->
+    <div class="graphs-section">
+      <h2>Graphs</h2>
+      <div class="graph">
+        <h3>Expenses Graph</h3>
+        <canvas id="expensesChart"></canvas>
+      </div>
+    </div>
+
+    <div class="tables-section">
+      <h2>Tables</h2>
+      <div class="table">
+        <h3>Expenses Table</h3>
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>Expense Description</th>
+            <th>Amount</th>
+          </tr>
+          <tr>
+            <td>2023-10-01</td>
+            <td>Groceries</td>
+            <td>$50</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- JavaScript for Graph -->
+<script>
+  const expensesData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    datasets: [{
+      label: 'Expenses',
+      data: [100, 200, 150, 300, 400, 250],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  const ctx = document.getElementById('expensesChart').getContext('2d');
+  const expensesChart = new Chart(ctx, {
+    type: 'bar',
+    data: expensesData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const expensesData = [
+    { date: '2023-10-01', description: 'Groceries', amount: 50 },
+    { date: '2023-10-02', description: 'Dinner', amount: 30 },
+    // Add more data as needed
+  ];
+  function updateChart(data) {
+    const labels = data.map(item => item.date);
+    const amounts = data.map(item => item.amount);
+
+    const ctx = document.getElementById('expensesChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Expenses',
+          data: amounts,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  function updateTable(data) {
+    const table = document.getElementById('expensesTable');
+
+    // Clear existing content
+    table.innerHTML = '';
+
+    // Iterate over the data and append rows to the table
+    data.forEach(item => {
+      const row = table.insertRow();
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+      cell1.textContent = item.date;
+      cell2.textContent = item.description;
+      cell3.textContent = '$' + item.amount;  // Display amount with a '$'
+    });
+  }
+
+  // Call these functions with the example data
+  updateChart(expensesData);
+  updateTable(expensesData);
+
+</script>
+
+</body>
+</html>
+
+
+
