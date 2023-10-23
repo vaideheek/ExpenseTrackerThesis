@@ -4,7 +4,6 @@ package com.example.expensetrackerthesis.controllers;
 import com.example.expensetrackerthesis.entities.Income;
 import com.example.expensetrackerthesis.services.IncomeService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 

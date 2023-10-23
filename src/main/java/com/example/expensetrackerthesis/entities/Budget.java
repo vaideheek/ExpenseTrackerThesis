@@ -60,19 +60,19 @@ public class Budget {
     }
 
     public boolean isValid() {
-        // Ensure amount is non-negative and start and end dates are valid
+        // check amount is non-negative and start and end dates are valid
         return this.amount >= 0 && this.startDate != null && this.endDate != null && this.startDate.isBefore(this.endDate);
     }
 
 
     public double calculateRemainingBudget(double totalExpenses) {
-        // Calculate remaining budget by subtracting total expenses from the initial amount
-        return Math.max(0, this.amount - totalExpenses);  // Ensure remaining budget is non-negative
+        // calculate remaining budget by subtracting total expenses from the initial amount
+        return Math.max(0, this.amount - totalExpenses);  // check remaining budget is non-negative
     }
 
 
     public boolean isExpired() {
-        // Check if the budget end date is before or equal to the current date
+        // check if the budget end date is before or equal to the current date
         LocalDate currentDate = LocalDate.now();
         return this.endDate.isBefore(currentDate) || this.endDate.isEqual(currentDate);
     }

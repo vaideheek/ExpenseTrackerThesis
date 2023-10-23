@@ -4,7 +4,6 @@ package com.example.expensetrackerthesis.services;
 import com.example.expensetrackerthesis.entities.Expense;
 import com.example.expensetrackerthesis.repositories.ExpenseRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

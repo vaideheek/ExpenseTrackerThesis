@@ -9,13 +9,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name") // Specify the column name
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "email") // Specify the column name
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password") // Specify the column name
+    @Column(name = "password")
     private String password;
 
     public User() {
@@ -27,7 +27,6 @@ public class User {
         this.password = password;
     }
 
-    // Getters and setters for all fields
     public Long getId() {
         return id;
     }

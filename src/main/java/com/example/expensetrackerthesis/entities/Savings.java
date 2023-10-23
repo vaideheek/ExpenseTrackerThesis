@@ -59,7 +59,6 @@ public class Savings {
     }
 
     public boolean isValid() {
-        // Check if amount is non-negative and date is not null
         return this.amount >= 0 && this.date != null;
     }
 

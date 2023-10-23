@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class BudgetService {
-
     private final BudgetRepository budgetRepository;
 
     public BudgetService(BudgetRepository budgetRepository) {

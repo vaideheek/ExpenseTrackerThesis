@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "incomes") // Add the @Table annotation with the table name
+@Table(name = "incomes")
 public class Income {
 
     @Id
@@ -70,7 +70,6 @@ public class Income {
 
 
     public double calculateYearlyIncome() {
-        // Calculate the yearly income by multiplying the monthly income by 12
         return this.amount * 12;
     }
 }

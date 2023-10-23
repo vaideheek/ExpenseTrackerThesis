@@ -15,11 +15,13 @@ public class BudgetController {
     private final BudgetService budgetService;
 
     public BudgetController(BudgetService budgetService) {
+
         this.budgetService = budgetService;
     }
 
     @GetMapping("/all")
     public List<Budget> getAllBudgets() {
+
         return budgetService.getAllBudgets();
     }
 

@@ -21,6 +21,7 @@ public class RegistrationController {
 
     @GetMapping("/register")
     public ModelAndView registerPage() {
+
         return new ModelAndView("register");
     }
 
@@ -34,28 +35,25 @@ public class RegistrationController {
         ModelAndView modelAndView = new ModelAndView();
 
         if (!password.equals(confirmPassword)) {
-            // Passwords do not match, show an error message
             modelAndView.setViewName("register");
             modelAndView.addObject("error", "Passwords do not match. Please try again.");
             return modelAndView;
         }
 
-        // Check if the email is already registered
+
         User existingUser = userRepository.findByEmail(email);
         if (existingUser != null) {
-            // Email already in use, show an error message
             modelAndView.setViewName("register");
             modelAndView.addObject("error", "Email already in use.");
             return modelAndView;
         }
 
-        // Create a new user and save it to the database
+
         User newUser = new User(name, email, password);
         userRepository.save(newUser);
 
 
 
-        // Redirect to the login page after successful registration
         modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }

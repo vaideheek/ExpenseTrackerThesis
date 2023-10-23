@@ -74,19 +74,19 @@ public class Expense {
     }
 
     public boolean isValid() {
-        return this.amount > 0           // Amount should be greater than 0
-                && this.date != null    // Date should not be null
-                && this.description != null && !this.description.isEmpty();  // Description should not be null or empty
+        return this.amount > 0
+                && this.date != null
+                && this.description != null && !this.description.isEmpty();
     }
 
 
-    public void applyDiscount(double discount) {
+    /*public void applyDiscount(double discount) {
         if (discount < 0 || discount > 1) {
             throw new IllegalArgumentException("Discount should be a value between 0 and 1 (inclusive).");
         }
 
         this.amount *= (1 - discount);  // Apply discount by multiplying with (1 - discount)
-    }
+    }*/
 
 
     @Override

@@ -4,7 +4,6 @@ package com.example.expensetrackerthesis.controllers;
 import com.example.expensetrackerthesis.entities.ExpenseCategory;
 import com.example.expensetrackerthesis.services.ExpenseCategoryService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
