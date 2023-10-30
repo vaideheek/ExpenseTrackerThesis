@@ -3,274 +3,55 @@
 <head>
   <title>Income Management</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!--  <script src="/static/js/incomes.js"></script>-->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      background: #fff; /* White background */
-      color: #0074cc; /* Blue color for text */
-      overflow: hidden;
-      height: 100vh;
-    }
-
-    .container {
-      max-width: 100%;
-      padding: 20px;
-      background: #fff;
-      border-radius: 5px;
-      box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
-      /*margin-top: 20px;*/
-      height: 100vh; /* Set a fixed height */
-      overflow-y: auto; /* Add a vertical scrollbar if content overflows */
-
-    }
-
-    .container h1 {
-      text-align: center;
-      font-weight: 700;
-      font-size: 48px;
-      padding-top: 80px;
-      padding-bottom: 50px;
-    }
-
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-
-    .form-row label{
-      width: 30%;
-      margin-bottom: 10px;
-      margin-left: 30px;
-      margin-right: 30px;
-      font-size: 24px;
-    }
-    .form-row input {
-      width: 60%;
-      margin-bottom: 10px;
-      margin-left: 30px;
-      margin-right: 30px;
-      font-size: 24px;
-
-    }
-
-    .form-row input {
-      border: 1px solid lightgrey;
-      border-radius: 5px;
-      height: 40px;
-      padding: 30px;
-      font-size: 16px;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .form-row input:focus {
-      border-color: #0074cc;
-      box-shadow: inset 0px 0px 2px 2px rgba(26, 188, 156, 0.25);
-    }
-
-    .btn-add-income {
-      background: #0074cc;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 24px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      width: 20%;
-      text-align: center;
-      margin-top: 20px;
-
-    }
-
-    .btn-add-income:hover {
-      background: #0069b8;
-    }
-
-    .flex-container {
-      display: flex;
-      flex-wrap: wrap;
-      padding-top: 50px;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .table-container {
-      width: 50%;
-      margin-bottom: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    table th,
-    table td {
-      padding: 10px;
-      text-align: center;
-      border: 1px solid #0074cc;
-    }
-
-    table th {
-      background: #0074cc;
-      color: #fff;
-    }
-
-    .chart-container {
-      width: 45%;
-      text-align: center;
-      margin: 10px 0;
-    }
-
-    canvas#incomeChart {
-      max-width: 100%;
-    }
-
-    .table-container table {
-      table-layout: fixed;
-    }
-
-    .table-container table th,
-    .table-container table td {
-      padding: 10px; /* Increase the padding for better row height consistency */
-      text-align: center;
-      border: 1px solid #0074cc;
-    }
-
-    .actions button {
-      margin: 5px;
-      padding: 5px 10px;
-      font-size: 16px;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: space-around;
-      justify-content: center; /* Center the buttons horizontally */
-      align-items: center;
-      width: 100%;
-    }
-
-    /* Icon for sidebar (you can use your preferred icon) */
-    .sidebar-icon {
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      top: 10px;
-      left: 40px;
-      cursor: pointer;
-    }
-
-    /* Sidebar styles */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: #0074cc; /* Blue sidebar background */
-      color: #fff; /* White text */
-      transition: left 0.3s ease;
-      padding: 20px;
-      display: flex;
-      flex-direction: column; /* Stack items vertically */
-      align-items: center; /* Center-align items horizontally */
-      justify-content: center; /* Center-align items vertically */
-    }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 60px;
-      width: 100%;
-      background: #0074cc; /* Blue background color */
-      color: #fff; /* White text color */
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-    }
-
-    .sidebar a {
-      display: block;
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 0;
-      transition: background 0.3s ease;
-    }
-
-    .sidebar a:hover {
-      background: #005aa7; /* Darker blue on hover */
-    }
-
-    /* Add your sidebar content here */
-
-    /* Placeholder for "Finance Manager" logo on the top right */
-    .logo {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      align-items: center;
-      color: #0074cc; /* Blue color */
-      z-index: 1; /* Ensure it's on top of the content */
-    }
-
-    .logo img {
-      width: 20px; /* Adjust the size as needed */
-      height: auto;
-      margin-right: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="/static/css/incomes.css">
 </head>
-
-
 <body>
-<!-- Icon for sidebar (You can replace this with your preferred icon) -->
+<!-- Top Bar with Sidebar Icon and Logo -->
 <div class="top-bar">
   <div class="sidebar-icon" id="sidebarToggle">
-    <img src="/static/images/sidebar.png" alt="Sidebar Icon" style="width: 40px; height: 40px">
+    <img src="/static/images/sidebar.png" alt="Sidebar Icon" style="height: 40px;width:40px">
   </div>
   <div class="logo">
-    <img src="hjkl" alt="Finance Manager Logo">
-    Finance Manager
+    <h4 style="color:#ffffff; margin-right: 15px; margin-top: 6px">Finance Manager</h4>
+    <img src="/static/images/front.png" alt="Finance Manager Logo">
   </div>
 </div>
 
-<!-- Sidebar content -->
-<div class="sidebar" id="sidebar" style="border: #ffffff; border-style: solid; border-width: medium; border-radius: 10px">
-  <a href="page1.html" style="font-size: 32px; margin-bottom: 50px">Savings</a>
-  <a href="page2.html" style="font-size: 32px; margin-bottom: 50px">Expenses</a>
-  <a href="/home" style="font-size: 32px; margin-top: 100px">Logout</a>
-  <!-- Add more items as needed -->
+<!-- Sidebar Content -->
+<div class="sidebar" id="sidebar">
+  <a href="page1.html">Savings</a>
+  <a href="page2.html">Expenses</a>
+  <a href="/login">Logout</a>
+  <!-- Add more sidebar items as needed -->
 </div>
 
-
+<!-- Main Content Container -->
 <div class="container">
   <h1>Incomes</h1>
+  <!-- Income Entry Form -->
   <form id="incomeForm">
     <div class="form-row">
       <label for="sourceName">Income Source:</label>
       <input type="text" id="sourceName" name="sourceName" required>
+    </div>
+    <div class="form-row">
+      <label for="category" class="form-label">Category</label>
+      <select id="category" class="form-select">
+        <option value="Salary">Salary</option>
+        <option value="Freelance">Freelance</option>
+        <option value="Investments">Investments</option>
+        <!-- Add more category options as needed -->
+      </select>
     </div>
     <div class="form-row">
       <label for="amount">Amount:</label>
@@ -283,12 +64,20 @@
     <button class="btn-add-income" type="submit">Add Income</button>
   </form>
 
+  <!-- Income Charts (Consider using JavaScript chart libraries for this) -->
+  <div id="chartContainer">
+    <canvas id="incomeBarChart" width="400" height="100"></canvas>
+    <canvas id="incomePieChart" width="400" height="100"></canvas>
+  </div>
+
+  <!-- Income Table -->
   <div class="flex-container">
     <div class="table-container">
       <table>
         <thead>
         <tr>
           <th>Income Source</th>
+          <th>Category</th>
           <th>Amount</th>
           <th>Income Date</th>
           <th>Actions</th>
@@ -298,11 +87,12 @@
         <!-- Sample table row with data -->
         <tr>
           <td>Sample Income Source</td>
+          <td>Salary</td>
           <td>$1000</td>
           <td>2023-10-25</td>
           <td class="actions">
-            <button data-toggle="modal" data-target="#editModal">Edit</button>
-            <button>Delete</button>
+            <button onclick="editIncome(this)">Edit</button>
+            <button onclick="deleteIncome(this)">Delete</button>
           </td>
         </tr>
         <!-- Add more rows with your data here -->
@@ -310,9 +100,8 @@
       </table>
     </div>
 
-    <div class="chart-container">
-      <canvas id="incomeChart" width="400" height="200"></canvas>
-    </div>
+
+
   </div>
 </div>
 
@@ -330,13 +119,20 @@
         <!-- Form to edit income record -->
         <form id="editIncomeForm">
           <label for="editSourceName">Income Source:</label>
-          <input type="text" id="editSourceName" name="editSourceName" required>
+          <input type="text" id="editSourceName" name="sourceName" required>
 
+          <label for="editCategory" class="form-label">Category</label>
+          <select id="editCategory" class="form-select">
+            <option value="Salary">Salary</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Investments">Investments</option>
+            <!-- Add more category options as needed -->
+          </select>
           <label for="editAmount">Amount:</label>
-          <input type="number" id="editAmount" name="editAmount" required>
+          <input type="number" id="editAmount" name="amount" required>
 
           <label for="editIncomeDate">Income Date:</label>
-          <input type="date" id="editIncomeDate" name="editIncomeDate" required>
+          <input type="date" id="editIncomeDate" name="incomeDate" required>
         </form>
       </div>
       <div class="modal-footer">
@@ -346,227 +142,117 @@
     </div>
   </div>
 </div>
-
-
-
-<!-- JavaScript to handle interactions and AJAX calls -->
 <script>
-  // Function to toggle the sidebar
-  const toggleSidebar = () => {
-    const sidebar = document.getElementById("sidebar");
-    if (sidebar.style.left === "0px" || sidebar.style.left === "") {
-      sidebar.style.left = "-250px";
-    } else {
-      sidebar.style.left = "0px";
-    }
-  };
+// Function to create the pie chart
+function createIncomeDistributionChart(incomeData) {
+const categories = {};
+incomeData.forEach((income) => {
+const category = income.category;
+if (categories[category]) {
+categories[category] += income.amount;
+} else {
+categories[category] = income.amount;
+}
+});
 
-  // Event listener for the sidebar toggle button
-  const sidebarToggle = document.getElementById("sidebarToggle");
-  sidebarToggle.addEventListener("click", toggleSidebar);
+const labels = Object.keys(categories);
+const data = Object.values(categories);
 
-  // Close the sidebar when the cursor leaves the sidebar
-  const sidebar = document.getElementById("sidebar");
-  sidebar.addEventListener("mouseleave", () => {
-    if (sidebar.style.left === "0px") {
-      toggleSidebar();
-    }
-  });
+const ctx = document.getElementById('incomePieChart');
 
-  // Hide the sidebar when the cursor enters the container
-  const container = document.querySelector(".container");
-  container.addEventListener("mouseenter", () => {
-    if (sidebar.style.left === "0px") {
-      toggleSidebar();
-    }
-  });
+new Chart(ctx, {
+type: 'pie',
+data: {
+labels: labels,
+datasets: [{
+label: 'Income Distribution',
+data: data,
+backgroundColor: [
+'rgba(255, 99, 132, 0.2)',
+'rgba(54, 162, 235, 0.2)',
+'rgba(255, 205, 86, 0.2)',
+// Add more colors as needed
+],
+borderColor: [
+'rgb(255, 99, 132)',
+'rgb(54, 162, 235)',
+'rgb(255, 205, 86)',
+// Add more colors as needed
+],
+borderWidth: 1,
+}],
+},
+options: {
+responsive: true,
+},
+});
+}
 
-  // Function to update an income record
-  const updateIncome = (id) => {
-    // Capture updated data from the modal fields
-    const updatedSourceName = document.getElementById("editSourceName").value;
-    const updatedAmount = parseFloat(document.getElementById("editAmount").value);
-    const updatedIncomeDate = document.getElementById("editIncomeDate").value;
+// Function to create the bar chart
+function createMonthlyIncomeChart(incomeData) {
+const months = {};
+incomeData.forEach((income) => {
+const incomeDate = moment(income.incomeDate);
+const month = incomeDate.format('MMMM YYYY');
+if (months[month]) {
+months[month] += income.amount;
+} else {
+months[month] = income.amount;
+}
+});
 
-    // Create a JSON object with the updated data
-    const updatedIncome = {
-      sourceName: updatedSourceName,
-      amount: updatedAmount,
-      incomeDate: updatedIncomeDate,
-    };
+const labels = Object.keys(months);
+const data = Object.values(months);
 
-    // Send an AJAX PUT request to update the income record
-    fetch(`http://localhost:8080/incomes/update/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedIncome),
-    })
-            .then(response => response.json())
-            .then(() => {
-              // Close the edit modal
-              $('#editModal').modal('hide');
+const ctx = document.getElementById('incomeBarChart'); // Use the same canvas as the pie chart
 
-              // Refresh the income history table
-              displayIncomeHistory();
-            })
-            .catch(error => {
-              console.error('Error updating income data: ', error);
-            });
-  }
+new Chart(ctx, {
+type: 'bar',
+data: {
+labels: labels,
+datasets: [{
+label: 'Monthly Income',
+data: data,
+backgroundColor: 'rgba(75, 192, 192, 0.2)',
+borderColor: 'rgba(75, 192, 192, 1)',
+borderWidth: 1,
+}],
+},
+options: {
+scales: {
+y: {
+beginAtZero: true,
+},
+},
+},
+});
+}
 
-  // Function to fetch and display income data in the table
-  const displayIncomeHistory = () => {
-    // Extract data from the HTML table
-    const table = document.querySelector("table");
-    const rows = table.querySelectorAll("tr");
-    const labels = [];
-    const data = [];
+// Remove the initial fetch call in displayIncomeTable
+function displayIncomeTable() {
+const tableRows = document.querySelectorAll('tbody tr'); // Select all table rows
 
-    for (let i = 1; i < rows.length; i++) {
-      const cells = rows[i].querySelectorAll("td");
-      labels.push(cells[0].textContent);
-      data.push(parseFloat(cells[1].textContent));
+const incomeData = Array.from(tableRows).map((row) => {
+return {
+sourceName: row.cells[0].innerText,
+amount: parseFloat(row.cells[2].innerText),
+incomeDate: row.cells[3].innerText,
+category: row.cells[1].innerText,
+};
+});
 
-      // Create Edit and Delete buttons with the same styling
-      const actionsCell = rows[i].querySelector(".actions");
-      actionsCell.innerHTML = ''; // Clear existing buttons
-      const editButton = document.createElement('button');
-      editButton.textContent = 'Edit';
-      editButton.className = 'btn btn-primary'; // Use the same class
-      editButton.dataset.id = i.toString(); // Set the dataset ID
-      editButton.addEventListener('click', editIncome);
+// Call the chart creation functions with the extracted data
+createIncomeDistributionChart(incomeData);
+createMonthlyIncomeChart(incomeData);
+}
 
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
-      deleteButton.className = 'btn btn-danger'; // Use the same class
-      deleteButton.dataset.id = i.toString(); // Set the dataset ID
-      deleteButton.addEventListener('click', confirmDeleteIncome);
-
-      actionsCell.appendChild(editButton);
-      actionsCell.appendChild(deleteButton);
-    }
-
-    // Find the canvas element in the DOM
-    const canvas = document.getElementById("incomeChart");
-
-    // Create the chart using the extracted data
-    new Chart(canvas, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Income Analysis",
-            data: data,
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  }
-
-
-  // Function to open the edit modal for a specific income record
-  // Function to open the edit modal for a specific income record
-  function editIncome(event) {
-    const id = event.target.dataset.id; // Get the dataset ID
-    // Fetch the income record based on the given ID from the backend
-    fetch(`http://localhost:8080/incomes/${id}`)
-            .then(response => response.json())
-            .then(data => {
-              // Populate the modal fields with the income data
-              document.getElementById("editSourceName").value = data.sourceName;
-              document.getElementById("editAmount").value = data.amount;
-              document.getElementById("editIncomeDate").value = data.incomeDate;
-
-              // Show the edit modal
-              $('#editModal').modal('show');
-
-              // Pass the id to the updateIncome function
-              document.getElementById("editIncomeForm").onsubmit = function (e) {
-                e.preventDefault();
-                updateIncome(id);
-              };
-            })
-            .catch(error => {
-              console.error('Error fetching income data for edit: ', error);
-            });
-  }
-
-
-  // Function to open a confirmation dialog for deleting income
-  const confirmDeleteIncome = (event) => {
-    const id = event.target.dataset.id; // Get the dataset ID
-    if (confirm('Are you sure you want to delete this income record?')) {
-      deleteIncome(id);
-    }
-  }
-
-  // Function to delete an income record
-  const deleteIncome = (id) => {
-    // Send an AJAX DELETE request to delete the income record
-    fetch(`http://localhost:8080/incomes/delete/${id}`, {
-      method: 'DELETE',
-    })
-            .then(() => {
-              // Refresh the income history table
-              displayIncomeHistory();
-            })
-            .catch(error => {
-              console.error('Error deleting income data: ', error);
-            });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    // Function to add a new income source
-    const addIncomeSource = () => {
-      // Capture form data and make an AJAX request to add the income source
-      const sourceName = document.getElementById("sourceName").value;
-      const amount = parseFloat(document.getElementById("amount").value);
-      const incomeDate = document.getElementById("incomeDate").value;
-
-      fetch('http://localhost:8080/incomes/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sourceName, amount, incomeDate }),
-      })
-              .then(response => response.json())
-              .then(() => {
-                // After adding, call displayIncomeHistory() to refresh the table
-                displayIncomeHistory();
-                // Clear form fields after adding
-                document.getElementById("sourceName").value = '';
-                document.getElementById("amount").value = '';
-                document.getElementById("incomeDate").value = '';
-              })
-              .catch(error => {
-                console.error('Error adding income source: ', error);
-              });
-    }
-
-    // Handle form submission for adding income
-    document.getElementById("incomeForm").addEventListener("submit", function (e) {
-      e.preventDefault(); // Prevent the default form submission
-      addIncomeSource();
-    });
-
-    // Display income history on page load
-    displayIncomeHistory();
-  });
+// Call the displayIncomeTable function after the page loads
+document.addEventListener('DOMContentLoaded', function () {
+displayIncomeTable();
+});
 </script>
 
+</body>
+</html>
 </body>
 </html>

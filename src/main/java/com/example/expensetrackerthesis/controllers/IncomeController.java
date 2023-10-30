@@ -3,6 +3,9 @@ package com.example.expensetrackerthesis.controllers;
 
 import com.example.expensetrackerthesis.entities.Income;
 import com.example.expensetrackerthesis.services.IncomeService;
+import jakarta.xml.bind.ValidationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +20,11 @@ public class IncomeController {
         this.incomeService = incomeService;
     }
 
+    @GetMapping("/incomes")
+    public String showIncomesPage() {
+        return "incomes"; // This should match the template name without the ".html" extension
+    }
+
     @GetMapping("/all")
     public List<Income> getAllIncomes() {
         return incomeService.getAllIncomes();
@@ -28,17 +36,23 @@ public class IncomeController {
     }
 
     @PostMapping("/add")
-    public void addIncome(@RequestBody Income income) {
+    public void addIncome(@RequestBody Income income) throws ValidationException {
         incomeService.addIncome(income);
     }
 
-    @PutMapping("/update")
-    public void updateIncome(@RequestBody Income income) {
+    @PutMapping("/update/{id}")
+    public void updateIncome(@PathVariable Long id, @RequestBody Income income) throws ValidationException {
         incomeService.updateIncome(income);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteIncome(@PathVariable Long id) {
         incomeService.deleteIncome(id);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getAllCategories() {
+        List<String> categories = incomeService.getAllCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 }

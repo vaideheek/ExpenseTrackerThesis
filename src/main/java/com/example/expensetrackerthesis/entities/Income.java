@@ -12,24 +12,30 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "sourceName") // Match the form field name
+    private String sourceName; // Change this field name to match the form
+
+    @Column(name = "category")
+    private String category;
 
     @Column(name = "amount")
     private double amount;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "incomeDate") // Match the form field name
+    private LocalDate incomeDate; // Change this field name to match the form
 
     public Income() {
     }
 
-    public Income(Long id, String description, double amount, LocalDate date) {
+    public Income(Long id, String sourceName, String category, double amount, LocalDate incomeDate) {
         this.id = id;
-        this.description = description;
+        this.sourceName = sourceName;
+        this.category=category;
         this.amount = amount;
-        this.date = date;
+        this.incomeDate = incomeDate;
+
     }
+
 
     public Long getId() {
         return id;
@@ -39,12 +45,12 @@ public class Income {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategory() {
+        return category;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public double getAmount() {
@@ -55,17 +61,25 @@ public class Income {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getSourceName() {
+        return sourceName;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    public LocalDate getIncomeDate() {
+        return incomeDate;
+    }
+
+    public void setIncomeDate(LocalDate incomeDate) {
+        this.incomeDate = incomeDate;
     }
 
     public boolean isValid() {
         // Check if description is not empty and amount is a valid numerical value
-        return this.amount >= 0 && this.date != null && this.description != null && !this.description.isEmpty();
+        return this.amount >= 0 && this.incomeDate != null && this.sourceName != null && !this.sourceName.isEmpty();
     }
 
 
