@@ -3,7 +3,6 @@ package com.example.expensetrackerthesis.controllers;
 
 import com.example.expensetrackerthesis.entities.Expense;
 import com.example.expensetrackerthesis.services.ExpenseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,27 +18,31 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/expenses")
+    public String expensesPage() {
+        return "expenses";
+    }
+    @GetMapping("/allExpenses")
     public List<Expense> getAllExpenses() {
         return expenseService.getAllExpenses();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("expenses/{id}")
     public Optional<Expense> getExpenseById(@PathVariable Long id) {
         return expenseService.getExpenseById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addExpenses")
     public void addExpense(@RequestBody Expense expense) {
         expenseService.addExpense(expense);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/updateExpenses")
     public void updateExpense(@RequestBody Expense expense) {
         expenseService.updateExpense(expense);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteExpenses/{id}")
     public void deleteExpense(@PathVariable Long id) {
         expenseService.deleteExpense(id);
     }

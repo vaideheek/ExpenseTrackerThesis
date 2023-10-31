@@ -2,6 +2,7 @@ package com.example.expensetrackerthesis.controllers;
 
 import com.example.expensetrackerthesis.entities.User;
 import com.example.expensetrackerthesis.repositories.UserRepository;
+import com.example.expensetrackerthesis.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegistrationController {
 
     private final UserRepository userRepository;
+    private final UserService userService; // Add this field
 
     @Autowired
-    public RegistrationController(UserRepository userRepository) {
+    public RegistrationController(UserRepository userRepository, UserService userService) { // Add UserService as a constructor parameter
         this.userRepository = userRepository;
+        this.userService = userService; // Initialize UserService
     }
 
     @GetMapping("/register")
     public ModelAndView registerPage() {
-
         return new ModelAndView("register");
     }
 
@@ -40,7 +42,6 @@ public class RegistrationController {
             return modelAndView;
         }
 
-
         User existingUser = userRepository.findByEmail(email);
         if (existingUser != null) {
             modelAndView.setViewName("register");
@@ -48,11 +49,8 @@ public class RegistrationController {
             return modelAndView;
         }
 
-
-        User newUser = new User(name, email, password);
+        User newUser = userService.registerUser(name, email, password);
         userRepository.save(newUser);
-
-
 
         modelAndView.setViewName("redirect:/login");
         return modelAndView;

@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f6b8c3;
+    color: #032b4b;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Existing CSS styles... */
+
+.container {
+    margin-left: 250px; /* Adjust the left margin to match the sidebar width */
+    margin-top: 70px; /* Add top margin to start below the navbar */
+    max-width: calc(100% - 250px); /* Set the maximum width to fill the available space beside the sidebar */
+    height: calc(100vh - 70px); /* Set the height to fill the available vertical space below the navbar */
+    padding: 20px;
+    background: #f5dde1;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.actions button {
+    margin: 10px; /* Increased margin for better spacing */
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center;
+    width: 100%;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width of the page */
+    height: 70px; /* Match the height of the top bar */
+    background: linear-gradient(135deg, #804851, #032b4b);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1; /* Ensure the navbar is above other content */
+}
+
+/* Position the Logout Button to the Right */
+.logout-button {
+    display: flex;
+    align-items: center;
+}
+
+#logoutButton {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 20px; /* Adjust the margin to control the distance from the right edge */
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#logoutButton:hover {
+    text-decoration: underline;
+}
+
+/* Logo styles */
+/* Position the Logo and Image on the Left */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-left: 20px;
+}
+
+
+
+/* Updated Sidebar Styles with Gradient Background */
+.sidebar {
+    position: fixed;
+    top: 60px; /* Adjust top to match navbar height */
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: linear-gradient(135deg, #804851, #032b4b); /* Pastel gradient background */
+    color: #000; /* Change text color to black for better visibility */
+    transition: left 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: #100b0b;
+    border-width: 20px;
+}
+
+/* Icon for sidebar (you can use your preferred icon) */
+.sidebar-icon {
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    cursor: pointer;
+}
+
+/* Sidebar links with white text */
+.sidebar a {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff; /* White text color */
+    text-decoration: none;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    transition: background 0.3s ease;
+}
+
+/* Change link color on hover */
+.sidebar a:hover {
+    background: #ef8698; /* Darker blue on hover */
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+}
