@@ -14,8 +14,7 @@ public class IncomeService {
 
     private final IncomeRepository incomeRepository;
 
-    public IncomeService(IncomeRepository incomeRepository,
-                         ExpenseCategoryRepository expenseCategoryRepository) {
+    public IncomeService(IncomeRepository incomeRepository) {
         this.incomeRepository = incomeRepository;
     }
 

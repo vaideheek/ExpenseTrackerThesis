@@ -18,28 +18,33 @@ public class BudgetController {
         this.budgetService = budgetService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/budgets")
+    public String budgetsPage() {
+        return "budgets";
+    }
+
+    @GetMapping("/allBudgets")
     public List<Budget> getAllBudgets() {
 
         return budgetService.getAllBudgets();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("budgets/{id}")
     public Optional<Budget> getBudgetById(@PathVariable Long id) {
         return budgetService.getBudgetById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addBudgets")
     public void addBudget(@RequestBody Budget budget) {
         budgetService.addBudget(budget);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/updateBudgets")
     public void updateBudget(@RequestBody Budget budget) {
         budgetService.updateBudget(budget);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteBudgets/{id}")
     public void deleteBudget(@PathVariable Long id) {
         budgetService.deleteBudget(id);
     }

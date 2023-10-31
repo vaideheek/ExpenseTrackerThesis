@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,27 +27,27 @@ public class IncomeController {
         return "incomes"; // This should match the template name without the ".html" extension
     }
 
-    @GetMapping("/all")
+    @GetMapping("/allIncomes")
     public List<Income> getAllIncomes() {
         return incomeService.getAllIncomes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("incomes/{id}")
     public Optional<Income> getIncomeById(@PathVariable Long id) {
         return incomeService.getIncomeById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addIncomes")
     public void addIncome(@RequestBody Income income) throws ValidationException {
         incomeService.addIncome(income);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateIncomes/{id}")
     public void updateIncome(@PathVariable Long id, @RequestBody Income income) throws ValidationException {
         incomeService.updateIncome(income);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteIncomes/{id}")
     public void deleteIncome(@PathVariable Long id) {
         incomeService.deleteIncome(id);
     }
