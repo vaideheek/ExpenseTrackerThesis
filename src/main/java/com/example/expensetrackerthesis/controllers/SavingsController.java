@@ -3,18 +3,23 @@ package com.example.expensetrackerthesis.controllers;
 
 import com.example.expensetrackerthesis.entities.Savings;
 import com.example.expensetrackerthesis.services.SavingsService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/savings")
+@Controller
 public class SavingsController {
 
     private final SavingsService savingsService;
 
     public SavingsController(SavingsService savingsService) {
         this.savingsService = savingsService;
+    }
+
+    @GetMapping("/savings")
+    public String loginPage() {
+        return "savings";
     }
 
     @GetMapping("/all")

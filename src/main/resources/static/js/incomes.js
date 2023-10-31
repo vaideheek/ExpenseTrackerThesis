@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         // Send a POST request to the server to add the income record
-        fetch("/incomes/add", {
+        fetch("/incomeController/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

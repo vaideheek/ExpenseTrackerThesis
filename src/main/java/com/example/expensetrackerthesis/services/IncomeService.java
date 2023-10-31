@@ -13,12 +13,10 @@ import java.util.Optional;
 public class IncomeService {
 
     private final IncomeRepository incomeRepository;
-    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     public IncomeService(IncomeRepository incomeRepository,
                          ExpenseCategoryRepository expenseCategoryRepository) {
         this.incomeRepository = incomeRepository;
-        this.expenseCategoryRepository = expenseCategoryRepository;
     }
 
     public List<Income> getAllIncomes() {

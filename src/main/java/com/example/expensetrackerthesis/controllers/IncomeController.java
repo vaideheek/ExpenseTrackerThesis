@@ -6,12 +6,12 @@ import com.example.expensetrackerthesis.services.IncomeService;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/incomes")
+@Controller
 public class IncomeController {
 
     private final IncomeService incomeService;
@@ -20,8 +20,9 @@ public class IncomeController {
         this.incomeService = incomeService;
     }
 
+
     @GetMapping("/incomes")
-    public String showIncomesPage() {
+    public String incomesPage() {
         return "incomes"; // This should match the template name without the ".html" extension
     }
 

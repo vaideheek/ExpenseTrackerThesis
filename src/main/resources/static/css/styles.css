@@ -6,16 +6,18 @@
     font-family: 'Poppins',sans-serif;
 }
 body{
-    background: #005aa7;
+    background: linear-gradient(135deg, #804851, #032b4b);
     overflow: hidden;
+    margin:0;
+    padding: 0;
 }
 ::selection{
-    background: rgba(26,188,156,0.3);
+    background: rgb(255, 255, 255);
 }
 .container{
     max-width: 440px;
-    padding: 0 20px;
-    margin: 170px auto;
+    padding: 0px;
+    margin: 200px auto;
 }
 .wrapper{
     width: 100%;
@@ -25,7 +27,7 @@ body{
 }
 .wrapper .title{
     height: 90px;
-    background: #0074cc;
+    background: #ef8698;
     border-radius: 5px 5px 0 0;
     color: #fff;
     font-size: 30px;
@@ -53,8 +55,8 @@ body{
     transition: all 0.3s ease;
 }
 form .row input:focus{
-    border-color: #0074cc;
-    box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
+    border-color: #ef8698;
+    box-shadow: inset 0px 0px 2px 2px rgb(246, 184, 195);
 }
 form .row input::placeholder{
     color: #999;
@@ -65,8 +67,8 @@ form .row input::placeholder{
     height: 100%;
     color: #fff;
     font-size: 18px;
-    background: #0074cc;
-    border: 1px solid #0074cc;
+    background: #ef8698;
+    border: 1px solid #804851;
     border-radius: 5px 0 0 5px;
     display: flex;
     align-items: center;
@@ -76,7 +78,7 @@ form .row input::placeholder{
     margin: -8px 0 20px 0;
 }
 .wrapper form .pass a{
-    color: #0074cc;
+    color: #ef8698;
     font-size: 17px;
     text-decoration: none;
 }
@@ -88,12 +90,13 @@ form .row input::placeholder{
     font-size: 20px;
     font-weight: 500;
     padding-left: 0px;
-    background: #0074cc;
-    border: 1px solid #0074cc;
+    background: #ef8698;
+    border: 1px solid #ef8698;
     cursor: pointer;
 }
 form .button input:hover{
-    background: #0069b8;
+    background: #b76973;
+    border-color:#b76973 ;
 }
 .wrapper form .signup-link{
     text-align: center;
@@ -101,7 +104,7 @@ form .button input:hover{
     font-size: 17px;
 }
 .wrapper form .signup-link a{
-    color: #0074cc;
+    color: #b76973;
     text-decoration: none;
 }
 form .signup-link a:hover{

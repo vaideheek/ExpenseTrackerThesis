@@ -30,7 +30,7 @@ public class LoginController {
         User user = userService.findUserByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
             // Authentication successful, redirect to a new page
-            return "redirect:/home"; // Replace with your desired redirect URL
+            return "redirect:/incomes"; // Replace with your desired redirect URL
         } else {
             // Authentication failed, return to the login page with an error message
             return "redirect:/login?error=1"; // Add an error query parameter
