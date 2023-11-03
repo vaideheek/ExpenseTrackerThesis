@@ -37,11 +37,84 @@
     <!-- Add more sidebar items as needed -->
 </div>
 
+<div class="container">
+    <form id="expenseForm">
+        <div class="form-row">
+        <label for="expenseName">Expense Name:</label>
+        <input type="text" id="expenseName" required>
+        </div>
+        <div class="form-row">
+        <label for="expenseCategory" class="form-label">Category:</label>
+        <select id="expenseCategory" class="form-select" required>
+            <option value="food">Food</option>
+            <option value="utilities">Utilities</option>
+            <option value="rent">Rent</option>
+            <!-- Add more categories -->
+        </select>
+        </div>
+        <div class="form-row">
+        <label for="expenseAmount">Amount:</label>
+        <input type="number" id="expenseAmount" required>
+        </div>
+        <div class="form-row">
+        <label for="expenseDate">Date:</label>
+        <input type="date" id="expenseDate" required>
+        </div>
+        <button type="button" id="submitExpense">Submit</button>
+    </form>
+    <table id="expenseTable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="expenseList">
+
+        </tbody>
+    </table>
+
+</div>
+
 <script>
     function logout() {
         // Set the window location to the login page URL
         window.location.href = "login.html"; // Replace "login.html" with the actual URL of your login page
     }
+
+    document.getElementById("submitExpense").addEventListener("click", function () {
+        // Get expense details from the form
+        const name = document.getElementById("expenseName").value;
+        const category = document.getElementById("expenseCategory").value;
+        const amount = document.getElementById("expenseAmount").value;
+        const date = document.getElementById("expenseDate").value;
+
+        // Create a new row for the table
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${category}</td>
+        <td>${amount}</td>
+        <td>${date}</td>
+        <td>
+            <button class="edit-button" data-id="expenseId">Edit</button>
+            <button class="delete-button" data-id="expenseId">Delete</button>
+        </td>
+    `;
+
+        // Append the new row to the table
+        document.getElementById("expenseList").appendChild(newRow);
+
+        // Clear the form fields
+        document.getElementById("expenseName").value = "";
+        document.getElementById("expenseCategory").value = "food";
+        document.getElementById("expenseAmount").value = "";
+        document.getElementById("expenseDate").value = "";
+    });
+
 </script>
 </body>
 </html>
