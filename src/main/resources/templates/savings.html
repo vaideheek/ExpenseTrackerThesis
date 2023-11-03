@@ -2,44 +2,271 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Savings</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!--  <script src="/static/js/incomes.js"></script>-->
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-        crossorigin="anonymous">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="/static/css/savings.css">
 </head>
 <body>
+
 <!-- Navigation Bar -->
 <div class="navbar">
-  <div class="logo">
-    <img src="/images/front.png" alt="Finance Manager Logo">
-    <h4 style="color:#ffffff; margin-left: 15px; margin-top: 6px">Finance Manager</h4>
-  </div>
-  <div class="logout-button">
-    <button id="logoutButton" onclick="logout()">Logout</button>
-  </div>
+    <div class="logo">
+        <img src="/images/front.png" alt="Finance Manager Logo">
+        <h4 style="color:#ffffff; margin-left: 15px; margin-top: 6px">Finance Manager</h4>
+    </div>
+    <div class="logout-button">
+        <button id="logoutButton" onclick="logout()">Logout</button>
+    </div>
 </div>
 
 <!-- Sidebar Content -->
 <div class="sidebar" id="sidebar">
-  <a href="savings.html">Savings</a>
-  <a href="expenses.html">Expenses</a>
-  <a href="incomes.html">Incomes</a>
-  <!-- Add more sidebar items as needed -->
+    <a href="dashboard.html">Dashboard</a>
+    <a href="savings.html">Savings</a>
+    <a href="expenses.html">Expenses</a>
+    <a href="incomes.html">Incomes</a>
+    <a href="budgets.html">Budgets</a>
+    <!-- Add more sidebar items as needed -->
 </div>
+
+<div class="container">
+    <h1>Savings/Goals</h1>
+<!-- Savings/Goals Form -->
+<form id="savingsGoalsForm">
+    <div class = "radio-button">
+    <label style="margin-right: 163px;">
+        <input type="radio" name="goalType" value="saving"> Record a Saving
+    </label>
+    <label>
+        <input type="radio" name="goalType" value="goal"> Add a New Savings Goal
+    </label>
+    </div>
+
+
+    <!-- Fields for Adding a New Goal -->
+    <div id="goalFields" style="display: none;">
+        <div class="form-row">
+            <label for="goal-name">Goal:</label>
+            <input type="text" id="goal-name" placeholder="Enter a goal label" required>
+        </div>
+        <div class="form-row">
+            <label for="deadline">Target Deadline:</label>
+            <input type="date" id="deadline" required>
+        </div>
+        <div class="slider-row">
+            <label for="target-amount">Target Amount:</label>
+            <div class="slider-container">
+                <input type="range" id="target-amount" min="0" max="10000" value="0" class="slider" required>
+                <span id="amount-value">0</span>
+            </div>
+        </div>
+        </div>
+
+    <!-- Fields for Recording a Savings Allocation -->
+    <div id="savingFields" style="display: none;">
+        <div class="form-row">
+        <label for="savedAmount">Saved Amount:</label>
+        <input type="number" id="savedAmount" required>
+            </div>
+        <div class="form-row">
+        <label for="associatedGoal">Associated Goal:</label>
+        <select id="associatedGoal">
+            <!-- Populate this select menu with existing goals from your backend -->
+        </select>
+        </div>
+    </div>
+
+    <button type="button" id="submitButton">Submit</button>
+</form>
+
+<!-- Table for Displaying Existing Goals -->
+<table>
+    <thead>
+    <tr>
+        <th>Goal Name</th>
+        <th>Target Amount</th>
+        <th>Target Deadline</th>
+        <th>Current Amount Saved</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="goalsTableBody">
+        <tr>
+            <td>Goal 1</td>
+            <td>1000</td>
+            <td>2024-12-31</td>
+            <td>500</td>
+            <td>
+                <button onclick="editGoal(1)">Edit</button>
+                <button onclick="deleteGoal(1)">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Goal 2</td>
+            <td>2000</td>
+            <td>2023-12-31</td>
+            <td>1000</td>
+            <td>
+                <button onclick="editGoal(2)">Edit</button>
+                <button onclick="deleteGoal(2)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+</table>
+</div>
+
+
 <script>
-  function logout() {
-    // Set the window location to the login page URL
-    window.location.href = "login.html"; // Replace "login.html" with the actual URL of your login page
-  }
+
+    // Add this JavaScript code to update the target amount when the slider changes
+    const targetAmountSlider = document.getElementById('target-amount');
+    const targetAmountValue = document.getElementById('amount-value');
+
+    // Add an event listener to the slider
+    targetAmountSlider.addEventListener('input', () => {
+        targetAmountValue.textContent = targetAmountSlider.value;
+    });
+
+
+    // Function to show/hide fields based on user's selection
+    function updateFormFields() {
+        const goalFields = document.getElementById("goalFields");
+        const savingFields = document.getElementById("savingFields");
+
+        const selectedGoalType = document.querySelector('input[name="goalType"]:checked').value;
+
+        if (selectedGoalType === "goal") {
+            goalFields.style.display = "block";
+            savingFields.style.display = "none";
+        } else if (selectedGoalType === "saving") {
+            goalFields.style.display = "none";
+            savingFields.style.display = "block";
+        }
+    }
+
+    // Add an event listener to the goal type selection
+    const goalTypeRadios = document.querySelectorAll('input[name="goalType"]');
+    goalTypeRadios.forEach(radio => {
+        radio.addEventListener("change", updateFormFields);
+    });
+
+    // Initial form setup
+    updateFormFields();
+
+    // Function to populate the select menu with existing goals
+    function populateSelectWithGoals() {
+        // Get the select element
+        const associatedGoalSelect = document.getElementById("associatedGoal");
+        associatedGoalSelect.innerHTML = ""; // Clear any existing options
+
+        // Make an AJAX request to fetch existing goals from your server
+        fetch("/api/savings-goals/getAllSavingsGoal/all") // Replace with the actual endpoint URL
+            .then((response) => response.json()) // Assuming your server returns JSON
+            .then((data) => {
+                data.forEach((goal) => {
+                    // Create an option for each goal
+                    const option = document.createElement("option");
+                    option.value = goal.id; // Assuming the goal object has an 'id' property
+                    option.textContent = goal.name; // Assuming the goal object has a 'name' property
+                    associatedGoalSelect.appendChild(option);
+                });
+            })
+            .catch((error) => {
+                console.error("Error fetching goals:", error);
+            });
+    }
+
+    // Call the function to populate the select menu
+    populateSelectWithGoals();
+
+
+    // Add a form submission handler
+    document.getElementById("submitButton").addEventListener("click", function () {
+        const selectedGoalType = document.querySelector('input[name="goalType"]:checked').value;
+
+        if (selectedGoalType === "goal") {
+            const goalName = document.getElementById("goalName").value;
+            const targetAmount = document.getElementById("targetAmount").value;
+            const deadline = document.getElementById("deadline").value;
+
+            // Create a JSON object with the data
+            const newGoalData = {
+                name: goalName,
+                targetAmount: targetAmount,
+                deadline: deadline
+            };
+
+            // Send an AJAX request to add a new savings goal
+            fetch('/api/savings-goals/addSavingsGoal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newGoalData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Goal added successfully, you can handle the response here
+                        console.log("New savings goal added successfully!");
+                    } else {
+                        // Handle any errors
+                        console.error("Failed to add a new savings goal.");
+                    }
+                })
+                .catch(error => {
+                    console.error("An error occurred while adding a new savings goal:", error);
+                });
+        } else if (selectedGoalType === "saving") {
+            const savedAmount = document.getElementById("savedAmount").value;
+            const associatedGoal = document.getElementById("associatedGoal").value;
+
+            // Create a JSON object with the data
+            const newAllocationData = {
+                amountAllocated: savedAmount,
+                savingsGoalId: associatedGoal
+            };
+
+            // Send an AJAX request to record a savings allocation
+            fetch('/api/savings-allocations/addSavingsAllocation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newAllocationData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Allocation recorded successfully, you can handle the response here
+                        console.log("Savings allocation recorded successfully!");
+                        // Call the function to update the select menu
+                        populateSelectWithGoals();
+                    } else {
+                        // Handle any errors
+                        console.error("Failed to record a savings allocation.");
+                    }
+                })
+                .catch(error => {
+                    console.error("An error occurred while recording a savings allocation:", error);
+                });
+        }
+
+        // Reset the form or perform other actions
+        document.getElementById("savingsGoalsForm").reset();
+    });
+
+
 </script>
 </body>
 </html>

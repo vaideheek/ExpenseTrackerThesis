@@ -3,6 +3,8 @@ package com.example.expensetrackerthesis.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Table(name = "savings")
 public class Savings {
@@ -14,6 +16,10 @@ public class Savings {
     private String description;
     private double amount;
     private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "savings_goal_id")  // This matches the column name in the database
+    private SavingsGoal savingsGoal;
 
     public Savings() {
 
@@ -85,6 +91,17 @@ public class Savings {
             System.out.println("Invalid withdrawal amount.");
         }
     }
+
+    public void updateCurrentAmountSaved(SavingsGoal goal) {
+        List<Savings> associatedSavings = goal.getAssociatedSavings();
+        double totalSavedAmount = 0.0;
+        for (Savings savings : associatedSavings) {
+            totalSavedAmount += savings.getAmount(); // Use the 'amount' field
+        }
+        goal.setCurrentAmount(totalSavedAmount);
+    }
+
+
 
 }
 
