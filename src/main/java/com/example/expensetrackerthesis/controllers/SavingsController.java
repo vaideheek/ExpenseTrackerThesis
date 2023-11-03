@@ -1,51 +1,51 @@
 package com.example.expensetrackerthesis.controllers;
 
-
 import com.example.expensetrackerthesis.entities.Savings;
 import com.example.expensetrackerthesis.services.SavingsService;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
+@RequestMapping("/api/savings-allocations")
 public class SavingsController {
 
     private final SavingsService savingsService;
 
+    @Autowired
     public SavingsController(SavingsService savingsService) {
         this.savingsService = savingsService;
     }
 
-
-    @GetMapping("/savings")
-    public String savingsPage() {
-        return "savings";
-    }
-
-    @GetMapping("/allSavings")
+    @GetMapping("/getAllSavings")
     public List<Savings> getAllSavings() {
         return savingsService.getAllSavings();
     }
 
-    @GetMapping("savings/{id}")
+    @GetMapping("/getSavings/{id}")
     public Optional<Savings> getSavingsById(@PathVariable Long id) {
         return savingsService.getSavingsById(id);
     }
 
-    @PostMapping("/addSavings")
-    public void addSavings(@RequestBody Savings savings) {
-        savingsService.addSavings(savings);
+    @PostMapping("/addSavingsAllocation")
+    public Savings addSavingsAllocation(@RequestBody Savings savings) {
+        return savingsService.createSavings(savings);
     }
 
-    @PutMapping("/updateSavings")
-    public void updateSavings(@RequestBody Savings savings) {
-        savingsService.updateSavings(savings);
+    @PutMapping("/updateSavingsAllocation/{id}")
+    public Savings updateSavingsAllocation(@PathVariable Long id, @RequestBody Savings savings) {
+        savings.setId(id);
+        return savingsService.updateSavings(savings);
     }
 
-    @DeleteMapping("/deleteSavings/{id}")
-    public void deleteSavings(@PathVariable Long id) {
+    @DeleteMapping("/deleteSavingsAllocation/{id}")
+    public ResponseEntity<?> deleteSavingsAllocation(@PathVariable Long id) {
         savingsService.deleteSavings(id);
+        return ResponseEntity.ok("Savings allocation deleted");
     }
+
+
 }
