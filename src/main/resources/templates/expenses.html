@@ -39,6 +39,10 @@
 </div>
 
 <div class="container">
+
+    <h1>Expenses</h1>
+    <div class="formAndListContainer">
+    <div class="form">
     <form id="expenseForm">
         <div class="form-row">
         <label for="expenseName">Expense Name:</label>
@@ -61,8 +65,41 @@
         <label for="expenseDate">Date:</label>
         <input type="date" id="expenseDate" required>
         </div>
-        <button type="button" id="submitExpense">Submit</button>
+        <button type="button" id="submitButton">Submit</button>
     </form>
+    </div>
+        <div class="recurring-expenses-container">
+            <h2 style="font-style:italic">Recurring Expenses:</h2>
+            <ul id="recurringExpensesList">
+                <!-- Display recurring expenses here -->
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div id="filterAndSort" style="width:800px">
+        <div>
+            <label for="categoryFilter">Filter by Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All</option>
+                <option value="food">Food</option>
+                <option value="utilities">Utilities</option>
+                <option value="rent">Rent</option>
+                <!-- Add more categories -->
+            </select>
+        </div>
+        <div class="sortOptions">
+            <label for="sortOptions">Sort by:</label>
+            <select id="sortOptions">
+                <option value="date-asc">Date (Ascending)</option>
+                <option value="date-desc">Date (Descending)</option>
+                <option value="amount-asc">Amount (Ascending)</option>
+                <option value="amount-desc">Amount (Descending)</option>
+            </select>
+        </div>
+    </div>
+
     <table id="expenseTable">
         <thead>
         <tr>
@@ -77,6 +114,17 @@
 
         </tbody>
     </table>
+    <div id="reportGenerator">
+        <h3 style="margin-top: 40px">Expense Report</h3>
+        <form id="reportForm">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" required>
+            <label for="endDate" style="margin-left: 30px">End Date:</label>
+            <input type="date" id="endDate" required>
+            <button type="button" id="generateReportButton" style="margin-left: 30px">Generate Report</button>
+        </form>
+    </div>
+
 
 </div>
 
@@ -85,6 +133,58 @@
         // Set the window location to the login page URL
         window.location.href = "login.html"; // Replace "login.html" with the actual URL of your login page
     }
+
+    // Function to filter expenses based on category
+    function filterExpensesByCategory(category) {
+        const expenseRows = document.querySelectorAll("#expenseTable tbody tr");
+        expenseRows.forEach((row) => {
+            const categoryCell = row.querySelector("td:nth-child(2)"); // Assuming category is the second column
+            if (category === "all" || categoryCell.textContent === category) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    // Function to sort expenses
+    function sortExpenses(sortOption) {
+        const expenseTable = document.getElementById("expenseList");
+        const rows = Array.from(expenseTable.rows).slice(1); // Skip the header row
+        rows.sort((rowA, rowB) => {
+            const cellA = rowA.querySelector("td:nth-child(4)"); // Date column
+            const cellB = rowB.querySelector("td:nth-child(4)"); // Date column
+            if (sortOption === "date-asc") {
+                return new Date(cellA.textContent) - new Date(cellB.textContent);
+            } else if (sortOption === "date-desc") {
+                return new Date(cellB.textContent) - new Date(cellA.textContent);
+            } else if (sortOption === "amount-asc") {
+                return parseFloat(rowA.querySelector("td:nth-child(3)").textContent) - parseFloat(rowB.querySelector("td:nth-child(3)").textContent);
+            } else if (sortOption === "amount-desc") {
+                return parseFloat(rowB.querySelector("td:nth-child(3)").textContent) - parseFloat(rowA.querySelector("td:nth-child(3)").textContent);
+            }
+        });
+
+        // Clear the table
+        expenseTable.innerHTML = `<thead>${expenseTable.rows[0].innerHTML}</thead><tbody></tbody>`;
+        const tbody = expenseTable.querySelector("tbody");
+        rows.forEach((row) => tbody.appendChild(row));
+    }
+
+    // Add event listeners for filter and sort options
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortOptions = document.getElementById("sortOptions");
+
+    categoryFilter.addEventListener("change", () => {
+        const selectedCategory = categoryFilter.value;
+        filterExpensesByCategory(selectedCategory);
+    });
+
+    sortOptions.addEventListener("change", () => {
+        const selectedSortOption = sortOptions.value;
+        sortExpenses(selectedSortOption);
+    });
+
 
     document.getElementById("submitExpense").addEventListener("click", function () {
         // Get expense details from the form
@@ -115,6 +215,99 @@
         document.getElementById("expenseAmount").value = "";
         document.getElementById("expenseDate").value = "";
     });
+
+    document.getElementById("generateReportButton").addEventListener("click", function () {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        // Fetch expense data based on the date range
+        fetch('/api/expenses?startDate=' + startDate + '&endDate=' + endDate)
+            .then((response) => response.json())
+            .then((data) => {
+                // Create a report using data (e.g., generate an HTML or CSV report)
+                const reportContent = generateReport(data);
+
+                // Offer the report for download as a text file
+                const blob = new Blob([reportContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'expense_report.txt';
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            })
+            .catch((error) => {
+                console.error("Error generating the report:", error);
+            });
+    });
+
+    function generateReport(data) {
+        // Initialize the report with a header row
+        let report = 'Name,Category,Amount,Date\n';
+
+        // Loop through the expense data and append each entry
+        data.forEach((expense) => {
+            // Escape any potentially problematic values (e.g., if an expense name contains a comma)
+            const name = escapeCSVValue(expense.name);
+            const category = escapeCSVValue(expense.category);
+            const amount = expense.amount;
+            const date = escapeCSVValue(expense.date);
+
+            // Format and append the row to the report
+            report += `"${name}","${category}",${amount},"${date}"\n`;
+        });
+
+        return report;
+    }
+
+    function escapeCSVValue(value) {
+        // Escape double quotes by doubling them (e.g., " becomes "")
+        return value.replace(/"/g, '""');
+    }
+
+
+
+    // Create an object to store category-wise total amounts
+    const categoryTotals = {};
+
+    // Iterate through the table rows to fetch expenses and calculate totals
+    for (const row of tableBody.rows) {
+        const cells = row.cells;
+        const name = cells[0].textContent;
+        const category = cells[1].textContent;
+        const amount = parseFloat(cells[2].textContent);
+
+        // Check if the category already exists in categoryTotals
+        if (categoryTotals[category]) {
+            categoryTotals[category] += amount;
+        } else {
+            categoryTotals[category] = amount;
+        }
+    }
+
+    // Fetch the recurring expenses list
+    const recurringExpensesList = document.getElementById('recurringExpensesList');
+
+    // Clear the existing list items (if any)
+    recurringExpensesList.innerHTML = '';
+
+    // Display the category-wise totals in the recurring expenses list
+    for (const category in categoryTotals) {
+        if (categoryTotals.hasOwnProperty(category)) {
+            const amount = categoryTotals[category];
+
+            // Create a list item for each category and amount
+            const listItem = document.createElement('li');
+            listItem.textContent = `${category} - ${amount}`;
+
+            // Append the list item to the recurring expenses list
+            recurringExpensesList.appendChild(listItem);
+        }
+    }
+
+
 
 </script>
 </body>
