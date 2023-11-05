@@ -41,5 +41,162 @@
     <a href="budgets.html">Budgets</a>
     <!-- Add more sidebar items as needed -->
 </div>
+
+<div class="container">
+    <h1>Budget Management</h1>
+
+    <h2>Set Budgets</h2>
+    <form id="budgetForm">
+        <label for="category">Category:</label>
+        <input type="text" id="category" required>
+        <label for="limit">Budget Limit:</label>
+        <input type="number" id="limit" required>
+        <button type="button" id="setBudgetButton">Set Budget</button>
+    </form>
+
+    <h2>Expenses</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody id="expenseList">
+        <!-- Display expenses here -->
+        </tbody>
+    </table>
+
+    <h2>Budget Summary</h2>
+    <div id="budgetSummary">
+        <!-- Display budget summary here -->
+    </div>
+
+    <h2>Notifications</h2>
+    <div id="notifications">
+        <!-- Display budget notifications here -->
+    </div>
+</div>
+
+
+<script>
+
+    // Store budget data in an array
+    const budgets = [];
+
+    // Store expense data in an array
+    const expenses = [];
+
+    // Function to set a budget
+    function setBudget() {
+        const category = document.getElementById('category').value;
+        const limit = parseFloat(document.getElementById('limit').value);
+
+        if (category && !isNaN(limit) && limit > 0) {
+            // Check if the category already exists in expenses
+            const existingExpense = expenses.find(expense => expense.category === category);
+
+            if (existingExpense) {
+                // Update the amount for the existing category
+                existingExpense.amount = limit;
+            } else {
+                // Create a new row in the expenses table
+                expenses.push({ category, amount: limit });
+            }
+
+            // Update the budget summary and expense list
+            updateBudgetSummary();
+            updateExpenseList();
+
+            // Clear the form
+            document.getElementById('category').value = '';
+            document.getElementById('limit').value = '';
+        } else {
+            alert('Please enter a valid category and budget limit.');
+        }
+    }
+
+    // Function to add an expense
+    function addExpense(category, amount) {
+        expenses.push({ category, amount });
+
+        // Update the expense list
+        updateExpenseList();
+
+        // Check if expenses exceed budgets
+        checkBudgets();
+    }
+
+    // Function to update the expense list
+    function updateExpenseList() {
+        const expenseList = document.getElementById('expenseList');
+        expenseList.innerHTML = '';
+
+        expenses.forEach((expense) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${expense.category}</td>
+            <td>${expense.amount}</td>
+        `;
+            expenseList.appendChild(row);
+        });
+    }
+
+    // Function to update the budget summary
+    function updateBudgetSummary() {
+        const budgetSummary = document.getElementById('budgetSummary');
+        budgetSummary.innerHTML = '';
+
+        budgets.forEach((budget) => {
+            const spent = getSpentForCategory(budget.category);
+            const remaining = budget.limit - spent;
+
+            const categorySummary = document.createElement('div');
+            categorySummary.innerHTML = `
+            <p>Category: ${budget.category}</p>
+            <p>Budget Limit: $${budget.limit}</p>
+            <p>Spent: $${spent}</p>
+            <p>Remaining: $${remaining}</p>
+        `;
+            budgetSummary.appendChild(categorySummary);
+        });
+    }
+
+    // Function to get total spent for a category
+    function getSpentForCategory(category) {
+        const categoryExpenses = expenses.filter((expense) => expense.category === category);
+        return categoryExpenses.reduce((total, expense) => total + expense.amount, 0);
+    }
+
+    // Function to check budgets and generate notifications
+    function checkBudgets() {
+        const notifications = document.getElementById('notifications');
+        notifications.innerHTML = '';
+
+        budgets.forEach((budget) => {
+            const spent = getSpentForCategory(budget.category);
+
+            if (spent > budget.limit) {
+                const notification = document.createElement('div');
+                notification.innerHTML = `
+                <p>Category: ${budget.category}</p>
+                <p>Budget Exceeded!</p>
+            `;
+                notifications.appendChild(notification);
+            }
+        });
+    }
+
+    // Attach event listeners
+    document.getElementById('setBudgetButton').addEventListener('click', setBudget);
+
+    // Example: Add expenses
+    addExpense('Groceries', 150);
+    addExpense('Entertainment', 75);
+    addExpense('Groceries', 80);
+    addExpense('Rent', 1200);
+
+
+</script>
 </body>
 </html>
