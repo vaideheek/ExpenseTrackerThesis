@@ -99,6 +99,7 @@ body {
 
 
 
+
 /* Updated Sidebar Styles with Gradient Background */
 .sidebar {
     position: fixed;
@@ -304,4 +305,19 @@ table th, table td {
 table th {
     background: #032e52;
     color: #fff;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #032e52;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Style for filter and sort button on hover */
+button:hover {
+    background-color: #ef8698;
 }

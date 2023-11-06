@@ -7,7 +7,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
@@ -39,35 +38,34 @@
 </div>
 
 <div class="container">
-
     <h1>Expenses</h1>
     <div class="formAndListContainer">
-    <div class="form">
-    <form id="expenseForm">
-        <div class="form-row">
-        <label for="expenseName">Expense Name:</label>
-        <input type="text" id="expenseName" required>
+        <div class="form">
+            <form id="expenseForm">
+                <div class="form-row">
+                    <label for="expenseName">Expense Name:</label>
+                    <input type="text" id="expenseName" required>
+                </div>
+                <div class="form-row">
+                    <label for="expenseCategory" class="form-label">Category:</label>
+                    <select id="expenseCategory" class="form-select" required>
+                        <option value="food">Food</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="rent">Rent</option>
+                        <!-- Add more categories -->
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="expenseAmount">Amount:</label>
+                    <input type="number" id="expenseAmount" required>
+                </div>
+                <div class="form-row">
+                    <label for="expenseDate">Date:</label>
+                    <input type="date" id="expenseDate" required>
+                </div>
+                <button type="button" id="submitButton">Submit</button>
+            </form>
         </div>
-        <div class="form-row">
-        <label for="expenseCategory" class="form-label">Category:</label>
-        <select id="expenseCategory" class="form-select" required>
-            <option value="food">Food</option>
-            <option value="utilities">Utilities</option>
-            <option value="rent">Rent</option>
-            <!-- Add more categories -->
-        </select>
-        </div>
-        <div class="form-row">
-        <label for="expenseAmount">Amount:</label>
-        <input type="number" id="expenseAmount" required>
-        </div>
-        <div class="form-row">
-        <label for="expenseDate">Date:</label>
-        <input type="date" id="expenseDate" required>
-        </div>
-        <button type="button" id="submitButton">Submit</button>
-    </form>
-    </div>
         <div class="recurring-expenses-container">
             <h2 style="font-style:italic">Recurring Expenses:</h2>
             <ul id="recurringExpensesList">
@@ -75,8 +73,6 @@
             </ul>
         </div>
     </div>
-
-
 
     <div id="filterAndSort" style="width:800px">
         <div>
@@ -100,7 +96,6 @@
         </div>
     </div>
 
-
     <table id="expenseTable">
         <thead>
         <tr>
@@ -111,8 +106,121 @@
             <th>Actions</th>
         </tr>
         </thead>
-        <tbody id="expenseList">
+        <tbody id="expenseTableBody">
+        <!-- Sample data for populating the table -->
+        <tr>
+            <td>Dinner</td>
+            <td>Food</td>
+            <td>25.00</td>
+            <td>2023-10-15</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Rent</td>
+            <td>Rent</td>
+            <td>800.00</td>
+            <td>2023-10-10</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <!-- Add more expense rows here -->
+        <tr>
+            <td>Groceries</td>
+            <td>Food</td>
+            <td>50.00</td>
+            <td>2023-10-09</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Bills</td>
+            <td>Utilities</td>
+            <td>60.00</td>
+            <td>2023-10-08</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Lunch</td>
+            <td>Food</td>
+            <td>15.00</td>
+            <td>2023-10-07</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Bills</td>
+            <td>Utilities</td>
+            <td>70.00</td>
+            <td>2023-10-06</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Coffee</td>
+            <td>Food</td>
+            <td>5.00</td>
+            <td>2023-10-05</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
 
+        <tr>
+            <td>Rent</td>
+            <td>Rent</td>
+            <td>800.00</td>
+            <td>2023-11-05</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Bills</td>
+            <td>Utilities</td>
+            <td>20.00</td>
+            <td>2023-10-04</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Dinner</td>
+            <td>Food</td>
+            <td>10.00</td>
+            <td>2023-10-03</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Bills</td>
+            <td>Utilities</td>
+            <td>40.00</td>
+            <td>2023-10-02</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        </tr>
         </tbody>
     </table>
     <div id="reportGenerator">
@@ -148,7 +256,7 @@
 
     // Function to sort expenses
     function sortExpenses(sortOption) {
-        const expenseTable = document.getElementById("expenseList");
+        const expenseTable = document.getElementById("expenseTable");
         const rows = Array.from(expenseTable.rows).slice(1); // Skip the header row
         rows.sort((rowA, rowB) => {
             const cellA = rowA.querySelector("td:nth-child(4)"); // Date column
@@ -184,8 +292,11 @@
         sortExpenses(selectedSortOption);
     });
 
+    // Get the submit button by its ID
+    const submitButton = document.getElementById("submitButton");
 
-    document.getElementById("submitExpense").addEventListener("click", function () {
+    // Add a click event listener to the submit button
+    submitButton.addEventListener("click", function () {
         // Get expense details from the form
         const name = document.getElementById("expenseName").value;
         const category = document.getElementById("expenseCategory").value;
@@ -195,18 +306,20 @@
         // Create a new row for the table
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
-        <td>${name}</td>
-        <td>${category}</td>
-        <td>${amount}</td>
-        <td>${date}</td>
-        <td>
-            <button class="edit-button" data-id="expenseId">Edit</button>
-            <button class="delete-button" data-id="expenseId">Delete</button>
-        </td>
-    `;
+            <td>${name}</td>
+            <td>${category}</td>
+            <td>${amount}</td>
+            <td>${date}</td>
+            <td>
+                <button class="edit-button" data-id="expenseId">Edit</button>
+                <button class="delete-button" data-id="expenseId">Delete</button>
+            </td>
+        `;
 
         // Append the new row to the table
-        document.getElementById("expenseList").appendChild(newRow);
+        const expenseTable = document.getElementById("expenseTable");
+        const tbody = expenseTable.querySelector("tbody");
+        tbody.appendChild(newRow);
 
         // Clear the form fields
         document.getElementById("expenseName").value = "";
@@ -215,6 +328,7 @@
         document.getElementById("expenseDate").value = "";
     });
 
+    // Function to generate a report
     document.getElementById("generateReportButton").addEventListener("click", function () {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
@@ -227,7 +341,7 @@
                 const reportContent = generateReport(data);
 
                 // Offer the report for download as a text file
-                const blob = new Blob([reportContent], { type: 'text/plain' });
+                const blob = new Blob([reportContent], {type: 'text/plain'});
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -268,48 +382,42 @@
 
 
 
-    // Create an object to store category-wise total amounts
-    const categoryTotals = {};
 
-    // Iterate through the table rows to fetch expenses and calculate totals
-    for (const row of tableBody.rows) {
-        const cells = row.cells;
-        const name = cells[0].textContent;
-        const category = cells[1].textContent;
-        const amount = parseFloat(cells[2].textContent);
+    // Function to calculate and display recurring expenses
+    function calculateRecurringExpenses() {
+        const recurringExpensesList = document.getElementById("recurringExpensesList");
+        const expenseTableBody = document.getElementById("expenseTableBody");
+        const rows = expenseTableBody.getElementsByTagName("tr");
 
-        // Check if the category already exists in categoryTotals
-        if (categoryTotals[category]) {
-            categoryTotals[category] += amount;
-        } else {
-            categoryTotals[category] = amount;
+        // Define an object to store recurring expenses and their total amounts
+        const recurringExpenses = {};
+
+        for (let i = 0; i < rows.length; i++) {
+            const name = rows[i].getElementsByTagName("td")[0].textContent; // Get the expense name
+            const amount = parseFloat(rows[i].getElementsByTagName("td")[2].textContent); // Get the expense amount
+
+            // Check if the name is already in the recurring expenses object
+            if (recurringExpenses.hasOwnProperty(name)) {
+                recurringExpenses[name] += amount; // Add the amount to the existing total
+            } else {
+                recurringExpenses[name] = amount; // Initialize the total amount
+            }
         }
-    }
 
-    // Fetch the recurring expenses list
-    const recurringExpensesList = document.getElementById('recurringExpensesList');
+        // Clear the recurring expenses list
+        recurringExpensesList.innerHTML = "";
 
-    // Clear the existing list items (if any)
-    recurringExpensesList.innerHTML = '';
-
-    // Display the category-wise totals in the recurring expenses list
-    for (const category in categoryTotals) {
-        if (categoryTotals.hasOwnProperty(category)) {
-            const amount = categoryTotals[category];
-
-            // Create a list item for each category and amount
-            const listItem = document.createElement('li');
-            listItem.textContent = `${category} - ${amount}`;
-
-            // Append the list item to the recurring expenses list
+        // Display the recurring expenses and their total amounts
+        for (const name in recurringExpenses) {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${name}: $${recurringExpenses[name].toFixed(2)}`;
             recurringExpensesList.appendChild(listItem);
         }
     }
 
-
-
-
-
+    // Call the function to calculate and display recurring expenses
+    calculateRecurringExpenses();
 </script>
+
 </body>
 </html>
